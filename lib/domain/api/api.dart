@@ -11,12 +11,14 @@ class Api {
       final map = jsonDecode(res.body);
       final user = map['graphql']['user'];
       final instaUser = InstaUser(
-        followers: user['edge_followed_by']['count'].toString(),
+        followers: user['edge_followed_by']['count'],
         fullName: user['full_name'],
-        following: user['edge_follow']['count'].toString(),
+        following: user['edge_follow']['count'],
         hdImageUrl: user['profile_pic_url_hd'],
         imageUrl: user['profile_pic_url'],
         userName: user['username'],
+        biography: user['biography'],
+        id: int.parse(user['id']),
       );
       return instaUser;
     } catch (e) {

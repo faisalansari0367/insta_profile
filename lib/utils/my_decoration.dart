@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyDecoration {
   static const Radius circularRadius = Radius.circular(12);
   static const BorderRadius borderRadius = BorderRadius.all(circularRadius);
-  static const physics = ClampingScrollPhysics();
+  static const physics = BouncingScrollPhysics();
   static const Curve curve = Curves.fastOutSlowIn;
   static const margin = EdgeInsets.all(10);
   static const splashDuration = Duration(milliseconds: 2000);
@@ -15,8 +15,6 @@ class MyDecoration {
     borderRadius: BorderRadius.all(Radius.circular(50)),
     borderSide: BorderSide(color: Colors.transparent),
   );
-
-  
 
   static BoxDecoration decoration({Color color = Colors.white}) {
     return BoxDecoration(

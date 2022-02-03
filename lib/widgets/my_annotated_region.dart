@@ -19,11 +19,11 @@ class MyAnnotatedRegion extends StatelessWidget {
     final theme = Theme.of(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        statusBarColor: statusBarColor,
+        statusBarColor: statusBarColor ?? theme.backgroundColor,
         systemStatusBarContrastEnforced: false,
         statusBarIconBrightness: statusBarIconBrightness ?? theme.brightness,
         systemNavigationBarContrastEnforced: false,
-        systemNavigationBarColor: navBarColor,
+        systemNavigationBarColor: navBarColor ?? theme.backgroundColor,
         systemNavigationBarDividerColor: Colors.transparent,
         systemNavigationBarIconBrightness: statusBarIconBrightness ?? theme.brightness,
       ),

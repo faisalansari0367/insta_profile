@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:hive/hive.dart';
 import 'package:insta_profile/models/insta_user.dart';
 import 'package:insta_profile/services/storage/hive_init_mixin.dart';
 import 'package:insta_profile/services/storage/storage.dart';
 import 'package:insta_profile/services/storage/storage_keys.dart';
+import 'package:insta_profile/widgets/my_snack_bar.dart';
 
 class HiveStorage extends StorageService with HiveInitMixin {
   static late Box _box;
@@ -30,6 +33,15 @@ class HiveStorage extends StorageService with HiveInitMixin {
   Future<void> initService() async {
     final box = await init(StorageKeys.boxName);
     _box = box;
+  }
+
+  Future<void> saveRecentUsers(List<InstaUser> users) async {
+    try {
+      final json = jsonEncode(users);
+      await box.put(StorageKeys.recentUsers, json);
+    } on Exception catch (e) {
+      MySnackBar.show(e.toString());
+    }
   }
 
   @override

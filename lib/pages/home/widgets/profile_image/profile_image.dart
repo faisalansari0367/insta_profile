@@ -23,7 +23,7 @@ class Profile extends StatelessWidget {
       ),
       name: Text(
         userName ?? '',
-        style: theme.textTheme.caption,
+        style: theme.textTheme.bodyText2,
       ),
     );
   }

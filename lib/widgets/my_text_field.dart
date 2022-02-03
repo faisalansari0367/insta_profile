@@ -25,14 +25,17 @@ class MyTextField extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       onSubmitted: onSubmitted,
+      style: theme.textTheme.bodyText2,
       decoration: InputDecoration(
         isDense: true,
         prefixIcon: prefixIcon,
         fillColor: fillColor ?? theme.inputDecorationTheme.fillColor,
         hintText: hintText,
-        hintStyle: TextStyle(color: theme.iconTheme.color),
+
+        hintStyle: TextStyle(color: theme.textTheme.bodyText1!.color),
         filled: true,
-        focusColor: theme.primaryColor,
+
+        focusColor: theme.iconTheme.color,
         enabledBorder: MyDecoration.inputBorder,
         focusedBorder: MyDecoration.inputBorder,
         border: MyDecoration.inputBorder,

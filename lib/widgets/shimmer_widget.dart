@@ -13,12 +13,14 @@ class ShimmerAnimation extends StatelessWidget {
     final imageBgColor = theme.cardColor;
     final shimmer = Container(
       width: width ?? 100.width,
-      height: height ?? 5.image,
+      height: height ?? 100.height,
       decoration: MyDecoration.decoration(color: imageBgColor),
     );
     final placeHolder = Shimmer.fromColors(
-      highlightColor: theme.cardColor,
-      baseColor: theme.backgroundColor,
+      highlightColor: imageBgColor,
+      baseColor: theme.colorScheme.secondary,
+      // baseColor: theme.cardColor,
+      // baseColor: Colors.grey[100]!,
       direction: ShimmerDirection.ltr,
       child: shimmer,
     );
