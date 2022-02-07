@@ -1,5 +1,7 @@
 class CustomException implements Exception {
+  // ignore: prefer_typing_uninitialized_variables
   final _message;
+  // ignore: prefer_typing_uninitialized_variables
   final _prefix;
 
   CustomException([this._message, this._prefix]);
@@ -11,8 +13,7 @@ class CustomException implements Exception {
 }
 
 class FetchDataException extends CustomException {
-  FetchDataException([String? message])
-      : super(message, "Error During Communication: ");
+  FetchDataException([String? message]) : super(message, "Error During Communication: ");
 }
 
 class BadRequestException extends CustomException {

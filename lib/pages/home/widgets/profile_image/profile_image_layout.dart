@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_profile/size_config.dart';
-import 'package:insta_profile/utils/my_decoration.dart';
+import 'package:insta_profile/theme/constans.dart';
 
 class ProfileImageLayout extends StatelessWidget {
   final Widget image;
@@ -20,16 +20,15 @@ class ProfileImageLayout extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          margin: MyDecoration.margin,
+          margin: kMargin,
+          // padding: EdgeInsets.symmetric(horizontal: 20),
           clipBehavior: Clip.antiAlias,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-          ),
+          decoration: const BoxDecoration(shape: BoxShape.circle),
           height: size.image,
           width: size.image,
           child: image,
         ),
-        // SizedBox(height: 1.height),
+        SizedBox(height: 1.height),
         if (name != null) name!,
       ],
     );

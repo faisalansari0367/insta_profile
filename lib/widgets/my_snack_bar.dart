@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_profile/global/global_key.dart';
-import 'package:insta_profile/utils/my_decoration.dart';
+import 'package:insta_profile/theme/constans.dart';
 
 class MySnackBar {
   static void show(String msg) {
@@ -10,7 +10,7 @@ class MySnackBar {
     final snackBar = SnackBar(
       content: Text(msg),
       behavior: SnackBarBehavior.floating,
-      margin: MyDecoration.margin,
+      margin: kMargin,
     );
     messenger?.removeCurrentSnackBar();
     messenger?.showSnackBar(snackBar);

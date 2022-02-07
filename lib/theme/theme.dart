@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'constants.dart';
+import 'color_constants.dart';
 
 // Our light/Primary Theme
 ThemeData themeData(BuildContext context) {
@@ -51,10 +51,11 @@ ThemeData darkThemeData(BuildContext context) {
     primaryIconTheme: const IconThemeData(color: kPrimaryIconDarkColor),
     textTheme: GoogleFonts.latoTextTheme().copyWith(
       bodyText1: const TextStyle(color: kBodyTextColorDark),
-      bodyText2: const TextStyle(color: kBodyTextColorDark),
-      headline4: const TextStyle(color: kTitleTextDarkColor, fontSize: 32),
+      bodyText2: TextStyle(color: Colors.grey[400]),
+      headline4: TextStyle(color: Colors.grey[600], fontSize: 32),
       headline1: const TextStyle(color: kTitleTextDarkColor, fontSize: 80),
       subtitle1: const TextStyle(color: kBodyTextColorDark),
+      headline6: TextStyle(color: Colors.grey[500]),
     ),
     colorScheme: const ColorScheme.light().copyWith(
       secondary: kAccentDarkColor,

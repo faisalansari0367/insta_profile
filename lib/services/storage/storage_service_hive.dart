@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
@@ -21,12 +22,17 @@ class HiveStorage extends StorageService with HiveInitMixin {
     return user;
   }
 
-  Box get box => _box;
+  // Box get box => _box;
 
   @override
   Future<void> saveUserData(InstaUser data) async {
     final json = data.toJson();
     await _box.put(data.userName, json);
+  }
+
+  Stream<BoxEvent> watchRecentUsers() {
+    final watch = _box.watch(key: StorageKeys.recentUsers);
+    return watch;
   }
 
   @override
@@ -35,19 +41,23 @@ class HiveStorage extends StorageService with HiveInitMixin {
     _box = box;
   }
 
+  @override
   Future<void> saveRecentUsers(List<InstaUser> users) async {
     try {
       final json = jsonEncode(users);
-      await box.put(StorageKeys.recentUsers, json);
+      await _box.put(StorageKeys.recentUsers, json);
     } on Exception catch (e) {
       MySnackBar.show(e.toString());
     }
   }
 
   @override
-  List<InstaUser> getRecentUsers() {
+  List<InstaUser> getRecentUsers({value}) {
     var list = <InstaUser>[];
-    for (var element in box.values) {
+    final data = value ?? _box.get(StorageKeys.recentUsers);
+    if (data == null) return list;
+    final json = jsonDecode(data);
+    for (var element in json) {
       if (element is Map) {
         final map = Map<String, dynamic>.from(element);
         final instaUser = InstaUser.fromJson(map);
@@ -56,4 +66,10 @@ class HiveStorage extends StorageService with HiveInitMixin {
     }
     return list;
   }
+
+  @override
+  bool getDarkMode() => _box.get(StorageKeys.isDarkMode) ?? false;
+
+  @override
+  Future<void> setDarkMode(bool value) async => await _box.put(StorageKeys.isDarkMode, value);
 }

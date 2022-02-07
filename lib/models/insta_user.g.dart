@@ -8,6 +8,7 @@ part of 'insta_user.dart';
 
 InstaUser _$InstaUserFromJson(Map<String, dynamic> json) {
   return InstaUser(
+    feedImages: List<String>.from(json['feedImages'] ?? []),
     biography: json['biography'] as String?,
     id: json['id'] as int?,
     followers: json['followers'] as int?,
@@ -28,4 +29,5 @@ Map<String, dynamic> _$InstaUserToJson(InstaUser instance) => <String, dynamic>{
       'followers': instance.followers,
       'following': instance.following,
       'id': instance.id,
+      'feedImages': instance.feedImages,
     };

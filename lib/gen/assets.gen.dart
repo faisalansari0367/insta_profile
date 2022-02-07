@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
   AssetGenImage get undrawStarlink =>
       const AssetGenImage('assets/images/undraw_starlink_.png');
   String get undrawStarlink3r0a => 'assets/images/undraw_starlink_3r0a.svg';

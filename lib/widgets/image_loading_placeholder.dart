@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insta_profile/utils/my_decoration.dart';
+import 'package:insta_profile/theme/constans.dart';
 
 import 'shimmer_widget.dart';
 
@@ -11,7 +11,7 @@ class ImageLoadingPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: MyDecoration.duration,
+      duration: kDuration,
       child: isLoading ? const ShimmerAnimation() : child,
     );
   }

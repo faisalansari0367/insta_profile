@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insta_profile/utils/my_decoration.dart';
+import 'package:insta_profile/theme/constans.dart';
 
 class ShowLoading extends StatelessWidget {
   final Widget child;
@@ -9,7 +9,7 @@ class ShowLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: MyDecoration.duration,
+      duration: kDuration,
       child: isLoading ? const Center(child: CircularProgressIndicator()) : child,
     );
   }

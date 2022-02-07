@@ -36,7 +36,6 @@ class MyApp extends StatelessWidget {
             title: 'Insta Profile',
             theme: value ? darkThemeData(context) : themeData(context),
             home: const HomeScreen(),
-            
           ),
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insta_profile/models/insta_user.dart';
-import 'package:insta_profile/provider/insta_downloader_provider.dart';
-import 'package:insta_profile/utils/my_decoration.dart';
+import 'package:insta_profile/provider/insta_provider.dart';
+import 'package:insta_profile/theme/constans.dart';
 import 'package:provider/provider.dart';
 
 import '../profile_image/profile_image.dart';
@@ -18,15 +18,16 @@ class RecentUsers extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: users.length,
       itemBuilder: itemBuilder,
-      physics: MyDecoration.physics,
+      // padding: EdgeInsets.symmetric(horizontal: 10),
+      physics: kPhysics,
     );
   }
 
   Widget itemBuilder(BuildContext context, int index) {
     final user = users.elementAt(index);
     return InkWell(
-      borderRadius: MyDecoration.borderRadius,
-      onTap: () => setUser(context, index),
+      borderRadius: kBorderRadius,
+      onTap: () => setUser(context, user),
       child: Profile(
         imageUrl: user.imageUrl,
         userName: user.userName,
@@ -35,8 +36,8 @@ class RecentUsers extends StatelessWidget {
     );
   }
 
-  void setUser(BuildContext context, int index) {
-    final provider = Provider.of<Insta>(context, listen: false);
-    provider.setUserFromRecents(index);
+  void setUser(BuildContext context, InstaUser user) {
+    final provider = Provider.of<InstaProvider>(context, listen: false);
+    provider.setUser(user);
   }
 }

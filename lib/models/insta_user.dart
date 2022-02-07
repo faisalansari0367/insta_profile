@@ -7,7 +7,9 @@ part 'insta_user.g.dart';
 class InstaUser extends Equatable {
   final String? userName, imageUrl, hdImageUrl, biography, fullName;
   final int? followers, following, id;
-  const InstaUser({
+  final List<String> feedImages;
+  const InstaUser( {
+    this.feedImages = const [],
     this.biography,
     this.id,
     this.followers,
@@ -22,5 +24,5 @@ class InstaUser extends Equatable {
   Map<String, dynamic> toJson() => _$InstaUserToJson(this);
 
   @override
-  List<Object?> get props => [userName, imageUrl, hdImageUrl, followers, following, fullName];
+  List<Object?> get props => [userName, imageUrl, hdImageUrl, followers, following, fullName, id, feedImages];
 }

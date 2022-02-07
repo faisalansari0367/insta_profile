@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insta_profile/models/insta_user.dart';
 import 'package:insta_profile/pages/home/widgets/profile_details/profile_details_layout.dart';
 import 'package:insta_profile/pages/home/widgets/profile_details/profile_details_placeholder.dart';
-import 'package:insta_profile/utils/my_decoration.dart';
+import 'package:insta_profile/theme/constans.dart';
 
 import '../profile_image/profile_image.dart';
 import '../user_details/user_details.dart';
@@ -20,7 +20,7 @@ class ProfileDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     // if (user == null) return const SizedBox.shrink();
     return AnimatedCrossFade(
-      duration: MyDecoration.duration,
+      duration: kDuration,
       crossFadeState: isLoading ? CrossFadeState.showSecond : CrossFadeState.showFirst,
       secondChild: const ProfileDetailsPlaceholder(),
       firstChild: ProfileDetailsLayout(

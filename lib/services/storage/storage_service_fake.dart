@@ -30,4 +30,17 @@ class StorageServiceFake extends StorageService {
   List<InstaUser> getRecentUsers() {
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> saveRecentUsers(List<InstaUser> users) {
+    throw UnimplementedError();
+  }
+
+  @override
+  bool getDarkMode() => true;
+
+  @override
+  Future<void> setDarkMode(bool value) {
+    return Future.value();
+  }
 }

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:insta_profile/pages/home/empty_data.dart';
-import 'package:insta_profile/pages/home/widgets/biography/biography.dart';
 import 'package:insta_profile/pages/home/widgets/recent_users/listview_switcher.dart';
 import 'package:insta_profile/pages/home/widgets/recent_users/recent_users.dart';
-import 'package:insta_profile/provider/insta_downloader_provider.dart';
+import 'package:insta_profile/provider/insta_provider.dart';
+import 'package:insta_profile/provider/recent_users_provider.dart';
 import 'package:insta_profile/size_config.dart';
-import 'package:insta_profile/utils/my_decoration.dart';
+import 'package:insta_profile/theme/constans.dart';
 import 'package:insta_profile/widgets/change_theme_button.dart';
 import 'package:insta_profile/widgets/my_annotated_region.dart';
-import 'package:insta_profile/widgets/my_network_image.dart';
+import 'package:insta_profile/widgets/my_cross_fade.dart';
 import 'package:insta_profile/widgets/my_text_field.dart';
 import 'package:provider/provider.dart';
 
-import 'widgets/profile_details/profile_details.dart';
+import 'feed_images.dart';
+import 'profile_and_image_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,15 +25,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<Insta>(context);
-    final userData = provider.userData;
+    final provider = Provider.of<InstaProvider>(context);
+
     final theme = Theme.of(context);
     return MyAnnotatedRegion(
       child: SafeArea(
         child: Scaffold(
           body: SingleChildScrollView(
+            physics: kPhysics,
             child: Padding(
-              padding: MyDecoration.margin,
+              padding: kMargin,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -54,45 +56,28 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   SizedBox(height: 1.height),
-                  DataEmpty(
-                    isEmpty: !provider.isLoading && provider.userData == null && provider.recentUsers.isEmpty,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
+                  Consumer<RecentUsersProvider>(
+                    builder: (context, value, child) {
+                      return MyCrossFade(
+                        isLoading: !value.isLoading && value.recentUsers.isEmpty,
+                        child: SizedBox(
                           height: 12.height,
                           child: ListViewSwitcher(
-                            isLoading: provider.isLoading && provider.recentUsers.isEmpty,
+                            isLoading: value.isLoading && value.recentUsers.isEmpty,
                             scrollDirection: Axis.horizontal,
                             child: RecentUsers(
-                              users: provider.recentUsers,
+                              users: value.recentUsers,
                             ),
                           ),
                         ),
-                        SizedBox(height: 1.height),
-                        MyNetworkImage(
-                          isLoading: provider.isLoading,
-                          onLongPress: () => provider.onLongPress(
-                            provider.userData!.hdImageUrl!,
-                            provider.userData!.userName!,
-                          ),
-                          urlToImage: provider.userData?.hdImageUrl,
-                        ),
-                        SizedBox(height: 1.height),
-                        ProfileDetails(
-                          isLoading: provider.isLoading && userData == null,
-                          user: userData,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Biography(
-                            bio: userData?.biography,
-                            isLoading: provider.isLoading && userData?.biography == null,
-                          ),
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
+                  DataEmpty(
+                    isEmpty: !provider.isLoading && provider.userData == null,
+                    child: const ImageAndProfileWidget(),
+                  ),
+                  FeedImages(feedImages: provider.userData?.feedImages ?? []),
                 ],
               ),
             ),

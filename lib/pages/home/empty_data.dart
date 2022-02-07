@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_profile/size_config.dart';
-import 'package:insta_profile/utils/my_decoration.dart';
+import 'package:insta_profile/theme/constans.dart';
 
 class DataEmpty extends StatelessWidget {
   final bool isEmpty;
@@ -10,7 +10,7 @@ class DataEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: MyDecoration.duration,
+      duration: kDuration,
       child: isEmpty
           ? SizedBox(
               height: 80.height,
