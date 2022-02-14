@@ -13,6 +13,7 @@ class InstaProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   final storage = HiveStorage();
   List<InstaUser> _recentUsers = [];
+  List<String> feedImages = [];
 
   InstaProvider() {
     _listenToBox();
@@ -55,9 +56,16 @@ class InstaProvider extends ChangeNotifier {
       final _userData = await Api.getUserData(userName);
       userData = _userData;
       updateUser(_userData);
-    } on Exception catch (e) {
-      MySnackBar.show(e.toString());
+      getFeedImages();
+    } on Exception catch (_) {
+      MySnackBar.show(userName + 'not found');
     }
     _setLoading(false);
+  }
+
+  void getFeedImages() {
+    final _feedImages = userData?.edgeOwnerToTimelineMedia?.edges?.map((e) => e.nodeData?.displayUrl).toList();
+    if (_feedImages == null) return;
+    feedImages = List<String>.from(_feedImages);
   }
 }

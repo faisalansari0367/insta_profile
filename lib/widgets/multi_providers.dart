@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_profile/provider/download_provider.dart';
 import 'package:insta_profile/provider/downloaded_files_provider.dart';
 import 'package:insta_profile/provider/insta_provider.dart';
 import 'package:insta_profile/provider/recent_users_provider.dart';
@@ -17,6 +18,8 @@ class AddMultiProviders extends StatelessWidget {
       ChangeNotifierProvider(create: (context) => InstaProvider()),
       ChangeNotifierProvider(create: (context) => DownloadedFilesProvider()),
       ChangeNotifierProvider(create: (context) => RecentUsersProvider()),
+      ChangeNotifierProvider(create: (context) => DownloadProvider()),
+
       //   ProxyProvider<RecentUsersProvider, InstaProvider>(
       //   update: (context, foo, previous) => InstaProvider(foo),
       // ),

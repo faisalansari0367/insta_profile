@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../size_config.dart';
 
-class DownloadedFile extends StatefulWidget {
+class MyListItem extends StatefulWidget {
   final Color? selectedColor;
   final Widget title;
   final Color? textColor;
@@ -10,9 +10,12 @@ class DownloadedFile extends StatefulWidget {
   final void Function()? ontap, onLongPress;
   final Widget leading;
   final IconButton? trailing;
+  final EdgeInsets? padding;
 
-  const DownloadedFile({
+  const MyListItem({
+
     Key? key,
+
     required this.title,
     this.description,
     this.ontap,
@@ -20,20 +23,20 @@ class DownloadedFile extends StatefulWidget {
     required this.leading,
     this.selectedColor,
     this.textColor,
-    this.trailing,
+    this.trailing, this.padding,
   }) : super(key: key);
 
   @override
-  _DownloadedFileState createState() => _DownloadedFileState();
+  _MyListItemState createState() => _MyListItemState();
 }
 
-class _DownloadedFileState extends State<DownloadedFile> {
+class _MyListItemState extends State<MyListItem> {
   // static const duration = Duration(milliseconds: 300);
   @override
   Widget build(BuildContext context) {
     final Widget child = Container(
       // color: Colors.white,
-      padding: EdgeInsets.symmetric(
+      padding: widget.padding ?? EdgeInsets.symmetric(
         horizontal: Responsive.width(2),
         vertical: Responsive.height(0.6),
       ),

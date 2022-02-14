@@ -16,7 +16,7 @@ class UserDetails extends StatelessWidget {
       children: [
         Text(
           NumberFormat.compact().format((value ?? 0)),
-          style: theme.textTheme.headline4,
+          style: theme.textTheme.headline6,
           textAlign: TextAlign.center,
           softWrap: true,
         ),

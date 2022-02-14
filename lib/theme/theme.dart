@@ -5,11 +5,14 @@ import 'color_constants.dart';
 
 // Our light/Primary Theme
 ThemeData themeData(BuildContext context) {
+  const iconThemeData = IconThemeData(color: kAccentIconDarkColor);
   return ThemeData(
-    appBarTheme: appBarTheme,
+    appBarTheme: const AppBarTheme(color: Colors.white, elevation: 0),
     primaryColor: kPrimaryColor,
+
     // accentColor: kAccentLightColor,
     scaffoldBackgroundColor: Colors.white,
+    backgroundColor: Colors.white,
     colorScheme: const ColorScheme.light(
       secondary: kSecondaryLightColor,
       brightness: Brightness.dark,
@@ -23,10 +26,10 @@ ThemeData themeData(BuildContext context) {
       backgroundColor: Colors.white,
     ),
 
-    backgroundColor: Colors.white,
-    iconTheme: const IconThemeData(color: kBodyTextColorLight),
-    primaryIconTheme: const IconThemeData(color: kBodyTextColorLight),
+    iconTheme: iconThemeData,
+    primaryIconTheme: iconThemeData,
     textTheme: GoogleFonts.latoTextTheme(),
+
     // copyWith(
     // bodyText1: const TextStyle(color: kBodyTextColorLight),
     // bodyText2: const TextStyle(color: kBodyTextColorLight),
@@ -38,24 +41,27 @@ ThemeData themeData(BuildContext context) {
 
 // Dark Them
 ThemeData darkThemeData(BuildContext context) {
+  const backgroundColor = Color(0xFF0D0C0E);
+  // final iconTheme = ThemeData.dark().iconTheme.merge(IconThemeData(color: kAccentIconLightColor))
+  const iconTheme = IconThemeData(color: kBodyTextColorDark);
   return ThemeData.dark().copyWith(
     primaryColor: kPrimaryColor,
-    scaffoldBackgroundColor: const Color(0xFF0D0C0E),
+    scaffoldBackgroundColor: backgroundColor,
     appBarTheme: appBarTheme,
-    backgroundColor: const Color(0xFF0D0C0E),
+    backgroundColor: backgroundColor,
     cardColor: kSurfaceDarkColor,
     inputDecorationTheme: const InputDecorationTheme().copyWith(
       fillColor: kSurfaceDarkColor,
     ),
-    iconTheme: const IconThemeData(color: kBodyTextColorDark),
-    primaryIconTheme: const IconThemeData(color: kPrimaryIconDarkColor),
+    iconTheme: iconTheme,
+    primaryIconTheme: iconTheme,
     textTheme: GoogleFonts.latoTextTheme().copyWith(
       bodyText1: const TextStyle(color: kBodyTextColorDark),
       bodyText2: TextStyle(color: Colors.grey[400]),
       headline4: TextStyle(color: Colors.grey[600], fontSize: 32),
       headline1: const TextStyle(color: kTitleTextDarkColor, fontSize: 80),
       subtitle1: const TextStyle(color: kBodyTextColorDark),
-      headline6: TextStyle(color: Colors.grey[500]),
+      headline6: TextStyle(color: Colors.grey[300]),
     ),
     colorScheme: const ColorScheme.light().copyWith(
       secondary: kAccentDarkColor,

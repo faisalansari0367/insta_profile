@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:insta_profile/helpers/redirect.dart';
+import 'package:insta_profile/widgets/full_screen_image.dart';
+import 'package:insta_profile/widgets/my_grid_view.dart';
 import 'package:insta_profile/widgets/my_network_image.dart';
 
 class FeedImages extends StatelessWidget {
@@ -7,22 +10,24 @@ class FeedImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-      ),
+    return MyGridView(
+      data: feedImages,
+      itemBuilder: itemBuilder,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: feedImages.length,
-      itemBuilder: (BuildContext context, int index) {
-        return MyNetworkImage(
-          // height: 60.height,
-          // onTap: () => OpenFile.open(filePath),
-          urlToImage: feedImages[index],
-        );
-      },
+    );
+  }
+
+  Widget itemBuilder(BuildContext context, int index) {
+    return MyNetworkImage(
+      onTap: () => Redirect.to(
+        context,
+        FullScreenImage(
+          images: feedImages,
+          index: index,
+        ),
+      ),
+      urlToImage: feedImages[index],
     );
   }
 }

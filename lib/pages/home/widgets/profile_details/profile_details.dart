@@ -29,8 +29,8 @@ class ProfileDetails extends StatelessWidget {
           userName: user?.fullName,
           size: 10,
         ),
-        followers: UserDetails(name: 'Followers', value: user?.followers),
-        following: UserDetails(name: 'Following', value: user?.following),
+        followers: UserDetails(name: 'Followers', value: user?.followers?.count),
+        following: UserDetails(name: 'Following', value: user?.following?.count),
       ),
     );
   }

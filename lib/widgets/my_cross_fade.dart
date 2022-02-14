@@ -13,9 +13,9 @@ class MyCrossFade extends StatelessWidget {
       firstCurve: kCurve,
       secondCurve: kCurve,
       duration: kDuration,
-      crossFadeState: isLoading ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-      secondChild: const SizedBox.shrink(),
-      firstChild: child,
+      crossFadeState: !isLoading ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+      firstChild: placeHolder ?? const SizedBox.shrink(),
+      secondChild: child,
     );
   }
 }

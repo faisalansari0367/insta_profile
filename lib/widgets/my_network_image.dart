@@ -10,18 +10,21 @@ import 'package:insta_profile/widgets/shimmer_widget.dart';
 
 class MyNetworkImage extends StatelessWidget {
   final String? urlToImage;
-  final bool isLoading;
-  final bool isCircle;
+  final bool isLoading, isCircle, useImageBuilder, autoHeight;
   final void Function()? onTap, onLongPress;
   final double? height;
+  final BoxFit fit;
   const MyNetworkImage({
     Key? key,
-    this.urlToImage,
+    this.isLoading = false,
     this.isCircle = false,
+    this.autoHeight = false,
+    this.useImageBuilder = true,
+    this.urlToImage,
     this.height,
     this.onTap,
     this.onLongPress,
-    this.isLoading = false,
+    this.fit = BoxFit.cover,
   }) : super(key: key);
 
   @override
@@ -33,7 +36,8 @@ class MyNetworkImage extends StatelessWidget {
     //   );
     // }
     return SizedBox(
-      height: height ?? 50.height,
+      height: autoHeight ? null : height ?? 50.height,
+      
       child: ImageLoadingPlaceholder(
         isLoading: isLoading,
         child: [null, ''].contains(urlToImage)
@@ -45,9 +49,10 @@ class MyNetworkImage extends StatelessWidget {
                 onTap: onTap,
                 onLongPress: onLongPress,
                 child: CachedNetworkImage(
+                  fit: fit,
                   placeholder: placeHolder,
                   errorWidget: errorWidget,
-                  imageBuilder: imageBuilder,
+                  imageBuilder: useImageBuilder ? imageBuilder : null,
                   imageUrl: urlToImage!,
                   // imageUrl: urlToImage!,
                 ),
@@ -63,7 +68,7 @@ class MyNetworkImage extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: imageProvider,
-            fit: BoxFit.cover,
+            fit: fit,
           ),
         ),
       ),

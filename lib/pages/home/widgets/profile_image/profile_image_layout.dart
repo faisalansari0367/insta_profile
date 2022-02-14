@@ -28,7 +28,7 @@ class ProfileImageLayout extends StatelessWidget {
           width: size.image,
           child: image,
         ),
-        SizedBox(height: 1.height),
+        // SizedBox(height: 1.height),
         if (name != null) name!,
       ],
     );
