@@ -9,7 +9,8 @@ class ProfileImagePlaceHolder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProfileImageLayout(
-      // size: 25.image,
+      
+      // size: 15.image,
       image: ShimmerAnimation(
         height: 25.image,
         width: 25.image,

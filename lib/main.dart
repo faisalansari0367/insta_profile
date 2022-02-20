@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:insta_profile/global/global_key.dart';
+import 'package:insta_profile/home_page_bloc/home_page_bloc.dart';
 import 'package:insta_profile/pages/home/home_screen.dart';
 import 'package:insta_profile/provider/theme_provider.dart';
 import 'package:insta_profile/services/storage/storage_service_hive.dart';

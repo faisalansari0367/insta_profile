@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:insta_profile/helpers/provider_helper.dart';
+import 'package:insta_profile/models/insta_user.dart';
 import 'package:insta_profile/provider/insta_provider.dart';
 import 'package:insta_profile/size_config.dart';
 import 'package:insta_profile/widgets/download_button.dart';
 import 'package:insta_profile/widgets/my_cross_fade.dart';
 import 'package:insta_profile/widgets/my_network_image.dart';
+// import 'package:instagram_repository/instagram_repository.dart';
 
 import 'widgets/biography/biography.dart';
 import 'widgets/profile_details/profile_details.dart';
 
 class ImageAndProfileWidget extends StatelessWidget {
-  const ImageAndProfileWidget({
-    Key? key,
-  }) : super(key: key);
+  const ImageAndProfileWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class ImageAndProfileWidget extends StatelessWidget {
               child: MyCrossFade(
                 isLoading: provider.userData?.hdImageUrl == null,
                 child: DownloadButton(
-                  fileLink: provider.userData!.hdImageUrl!,
+                  fileLink: provider.userData?.hdImageUrl ?? '',
                 ),
               ),
             ),
@@ -57,13 +57,6 @@ class ImageAndProfileWidget extends StatelessWidget {
           ),
         ),
         SizedBox(height: 1.height),
-
-        // Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: 2.width),
-        //   child: Text('Downloaded Files', style: theme.textTheme.headline6),
-        // ),
-        // SizedBox(height: 1.height),
-        // const DownloadFilesListView(),
       ],
     );
   }

@@ -6,22 +6,32 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:insta_profile/services/path_provider_service.dart';
+import 'package:insta_profile/widgets/my_snack_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class DownloadProvider with ChangeNotifier {
-  DownloadTaskStatus? status;
+  DownloadTaskStatus status = DownloadTaskStatus.undefined;
   int? progress = 0;
   ReceivePort _port = ReceivePort();
   static const _portName = 'downloader_send_port';
   Directory? cacheDir;
+  List<DownloadTask> tasks = [];
 
   DownloadProvider() {
     // _init();
+    loadAllTasks();
+  }
+
+  Future<void> loadAllTasks() async {
+    final _tasks = await FlutterDownloader.loadTasks();
+    if (_tasks != null) tasks = _tasks;
   }
 
   void _init() {
+    _port = ReceivePort();
     IsolateNameServer.registerPortWithName(_port.sendPort, _portName);
     FlutterDownloader.registerCallback(_downloadCallback);
+    _port.listen(_listener, onDone: () => {status = DownloadTaskStatus.undefined, notifyListeners()});
   }
 
   static void _downloadCallback(String id, DownloadTaskStatus status, int progress) {
@@ -29,24 +39,32 @@ class DownloadProvider with ChangeNotifier {
     sendPort!.send([id, status, progress]);
   }
 
-  Future<String?> addToQueue(String url, {String? name,bool isVideo = false}) async {
-    _port = ReceivePort();
+  bool isAlreadyDownloaded(String url) {
+    final split = url.split('?').first;
+    final list = tasks.where((element) => element.url.split('?').first == split);
+    if (list.isEmpty) return false;
+    return true;
+  }
+
+  Future<void> addToQueue(String url, {String? name, bool isVideo = false}) async {
+    if (isAlreadyDownloaded(url)) {
+      MySnackBar.show('Already downloaded');
+      return;
+    }
     _init();
-    _listener();
     await Permission.storage.request();
     await Permission.manageExternalStorage.request();
-    // initState();
     cacheDir ??= await PathProviderService.getCacheDir();
     try {
       final ext = isVideo ? 'mp4' : 'png';
-      final taskId = await FlutterDownloader.enqueue(
-        fileName: '$url.$ext',
+      await FlutterDownloader.enqueue(
+        fileName: '${UniqueKey().toString()}.$ext',
         url: url,
         savedDir: cacheDir!.path,
         showNotification: true,
         openFileFromNotification: true,
       );
-      return taskId;
+      loadAllTasks();
     } catch (e) {
       rethrow;
     }
@@ -64,25 +82,17 @@ class DownloadProvider with ChangeNotifier {
   //   super.dispose();
   // }
 
-  void _listener() {
-    _port.listen((data) {
-      // final int id = data[0];
-      status = data[1];
-      progress = data[2];
-      _getStatus(status!);
-      notifyListeners();
-    });
+  void _listener(data) {
+    status = data[1];
+    progress = data[2];
+    _getStatus(status);
+    notifyListeners();
   }
 
   void _getStatus(DownloadTaskStatus status) {
     if (status == DownloadTaskStatus.complete) {
       progress = 0;
-      _port.close();
       stopService();
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        status = DownloadTaskStatus.undefined;
-        notifyListeners();
-      });
     } else if (status == DownloadTaskStatus.enqueued) {
       log('status: enqueued');
       progress = null;

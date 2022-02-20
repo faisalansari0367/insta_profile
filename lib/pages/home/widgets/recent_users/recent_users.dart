@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insta_profile/models/insta_user.dart';
 import 'package:insta_profile/provider/insta_provider.dart';
+import 'package:insta_profile/size_config.dart';
 import 'package:insta_profile/theme/constans.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,6 @@ class RecentUsers extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: users.length,
       itemBuilder: itemBuilder,
-      // padding: EdgeInsets.symmetric(horizontal: 10),
       physics: kPhysics,
     );
   }

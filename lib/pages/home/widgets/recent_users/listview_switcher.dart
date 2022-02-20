@@ -27,7 +27,5 @@ class ListViewSwitcher extends StatelessWidget {
     return !isLoading ? child : placeHolder;
   }
 
-  Widget itemBuilder(BuildContext context, int index) {
-    return placeHolder ?? const ProfileImagePlaceHolder();
-  }
+  Widget itemBuilder(BuildContext context, int index) => placeHolder ?? const ProfileImagePlaceHolder();
 }

@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                   MyCrossFade(
-                    isLoading: (provider.userData?.edgeFelixVideoTimeline?.edges?.isEmpty ?? true) ||
+                    isLoading: (provider.userData?.edgeFelixVideoTimeline?.edges?.isEmpty ?? true) &&
                         (provider.userData?.edgeOwnerToTimelineMedia?.edges?.isEmpty ?? true),
                     child: ListTile(
                       onTap: () => Redirect.to(

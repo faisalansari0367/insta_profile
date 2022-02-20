@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_profile/size_config.dart';
+import 'package:insta_profile/theme/constans.dart';
 import 'package:insta_profile/utils/my_decoration.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -14,7 +15,10 @@ class ShimmerAnimation extends StatelessWidget {
     final shimmer = Container(
       width: width ?? 100.width,
       height: height ?? 100.height,
-      decoration: MyDecoration.decoration(color: imageBgColor),
+      decoration: BoxDecoration(
+        color: imageBgColor,
+        borderRadius: kBorderRadius,
+      ),
     );
     final placeHolder = Shimmer.fromColors(
       highlightColor: imageBgColor,

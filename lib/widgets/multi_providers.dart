@@ -14,11 +14,16 @@ class AddMultiProviders extends StatelessWidget {
   Widget build(BuildContext context) {
     // final recentProvider = RecentUsersProvider();
     final providers = [
-      ChangeNotifierProvider(create: (context) => ThemeProvider()),
-      ChangeNotifierProvider(create: (context) => InstaProvider()),
-      ChangeNotifierProvider(create: (context) => DownloadedFilesProvider()),
       ChangeNotifierProvider(create: (context) => RecentUsersProvider()),
+      ChangeNotifierProxyProvider<RecentUsersProvider, InstaProvider>(
+        create: (context) => InstaProvider(),
+        update: (context, value, previous) => previous!..setRecentUsers(value.recentUsers),
+      ),
+      ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ChangeNotifierProvider(create: (context) => DownloadedFilesProvider()),
+
       ChangeNotifierProvider(create: (context) => DownloadProvider()),
+      // ChangeNotifierProxyProvider(create: (context) => , update: (context, value, previous) => ,),
 
       //   ProxyProvider<RecentUsersProvider, InstaProvider>(
       //   update: (context, foo, previous) => InstaProvider(foo),

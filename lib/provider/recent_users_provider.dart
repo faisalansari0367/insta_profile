@@ -10,7 +10,9 @@ class RecentUsersProvider extends ChangeNotifier {
     _getUsersFromStorage();
     _listenToBox();
   }
-  void _listenToBox() async {
+
+
+  void _listenToBox() {
     storage.watchRecentUsers().listen((event) {
       _getUsersFromStorage(eventValue: event.value);
     });

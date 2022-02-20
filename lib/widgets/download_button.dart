@@ -9,6 +9,7 @@ import 'package:insta_profile/theme/constans.dart';
 import 'package:insta_profile/widgets/my_snack_bar.dart';
 import 'package:provider/provider.dart';
 
+import 'progress_widget.dart';
 import 'rounded_progress_indicator.dart';
 
 class DownloadButton extends StatefulWidget {
@@ -16,7 +17,8 @@ class DownloadButton extends StatefulWidget {
   final double? size;
   final bool isVideo;
   final void Function()? onPressed;
-  const DownloadButton({Key? key, this.onPressed, required this.fileLink, this.size, this.isVideo = false}) : super(key: key);
+  const DownloadButton({Key? key, this.onPressed, required this.fileLink, this.size, this.isVideo = false})
+      : super(key: key);
 
   @override
   _DownloadButtonState createState() => _DownloadButtonState();
@@ -51,13 +53,13 @@ class _DownloadButtonState extends State<DownloadButton> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withOpacity(0.4),
               shape: BoxShape.circle,
             ),
             height: 10.padding,
             width: 10.padding,
             child: Selector<DownloadProvider, DownloadTaskStatus>(
-              selector: (p0, p1) => p1.status ?? DownloadTaskStatus.undefined,
+              selector: (p0, p1) => p1.status,
               builder: (context, value, child) {
                 return AnimatedSwitcher(
                   duration: kDuration,
@@ -71,7 +73,6 @@ class _DownloadButtonState extends State<DownloadButton> {
             builder: (context, value, child) {
               return RoundedProgressIndicator(
                 strokeWidth: 3,
-                duration: kDuration,
                 color: theme.colorScheme.primary,
                 radius: 4.5.padding,
                 percentage: value!.toDouble(),
@@ -89,7 +90,7 @@ class _DownloadButtonState extends State<DownloadButton> {
       return Selector<DownloadProvider, int>(
         selector: (p0, p1) => p1.progress ?? 0,
         builder: (context, value, child) {
-          return _ProgressWidget(progress: value.toDouble());
+          return ProgressWidget(progress: value.toDouble());
         },
       );
     } else if (status == DownloadTaskStatus.complete) {
@@ -109,49 +110,10 @@ class _DownloadButtonState extends State<DownloadButton> {
     final provider = getProvider<DownloadProvider>(context);
     final downloaded = getProvider<DownloadedFilesProvider>(context);
     final isDownloaded = downloaded.contains(widget.fileLink);
-    // final ext = downloaded.getExt(widget.fileLink);
     if (!isDownloaded) {
       await provider.addToQueue(widget.fileLink, isVideo: widget.isVideo);
     } else {
       MySnackBar.show('Already downloaded');
     }
-  }
-}
-
-class _ProgressWidget extends StatefulWidget {
-  final double progress;
-  const _ProgressWidget({Key? key, required this.progress}) : super(key: key);
-
-  @override
-  State<_ProgressWidget> createState() => _ProgressWidgetState();
-}
-
-class _ProgressWidgetState extends State<_ProgressWidget> {
-  var tween = Tween<double>(begin: 0.0, end: 0.0);
-
-  @override
-  void didUpdateWidget(covariant _ProgressWidget oldWidget) {
-    if (widget.progress != oldWidget.progress) {
-      tween = Tween<double>(begin: oldWidget.progress, end: widget.progress);
-    }
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TweenAnimationBuilder(
-      tween: tween,
-      duration: kDuration,
-      curve: Curves.fastOutSlowIn,
-      builder: (context, double value, child) {
-        final text = value.toStringAsFixed(0);
-        return Text(
-          text,
-          style: TextStyle(
-            color: Colors.grey.shade100,
-          ),
-        );
-      },
-    );
   }
 }

@@ -19,11 +19,16 @@ class Profile extends StatelessWidget {
       size: size,
       image: MyNetworkImage(
         urlToImage: imageUrl,
+        // height: 50,
+        // useImageBuilder: true,
+        // autoHeight: true,
         isCircle: true,
       ),
       name: Text(
         userName ?? '',
+        softWrap: true,
         style: theme.textTheme.bodyText2,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

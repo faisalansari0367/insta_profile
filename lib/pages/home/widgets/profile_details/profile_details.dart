@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_profile/models/insta_user.dart';
+// import 'package:insta_profile/models/insta_user.dart';
 import 'package:insta_profile/pages/home/widgets/profile_details/profile_details_layout.dart';
 import 'package:insta_profile/pages/home/widgets/profile_details/profile_details_placeholder.dart';
 import 'package:insta_profile/theme/constans.dart';

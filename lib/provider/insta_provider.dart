@@ -15,16 +15,13 @@ class InstaProvider extends ChangeNotifier {
   List<InstaUser> _recentUsers = [];
   List<String> feedImages = [];
 
-  InstaProvider() {
-    _listenToBox();
+  
+
+  setRecentUsers(List<InstaUser> users) {
+    _recentUsers = users;
   }
 
-  void _listenToBox() async {
-    _recentUsers = storage.getRecentUsers();
-    storage.watchRecentUsers().listen((event) {
-      _recentUsers = storage.getRecentUsers(value: event.value);
-    });
-  }
+
 
   void setUser(InstaUser user) {
     userData = user;
@@ -58,13 +55,14 @@ class InstaProvider extends ChangeNotifier {
       updateUser(_userData);
       getFeedImages();
     } on Exception catch (_) {
-      MySnackBar.show(userName + 'not found');
+      MySnackBar.show(userName + ' not found');
     }
     _setLoading(false);
   }
 
   void getFeedImages() {
-    final _feedImages = userData?.edgeOwnerToTimelineMedia?.edges?.map((e) => e.nodeData?.displayUrl).toList();
+    String mapper(e) => e.nodeData?.displayUrl;
+    final _feedImages = userData?.edgeOwnerToTimelineMedia?.edges?.map(mapper).toList();
     if (_feedImages == null) return;
     feedImages = List<String>.from(_feedImages);
   }

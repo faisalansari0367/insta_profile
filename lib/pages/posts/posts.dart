@@ -95,6 +95,28 @@ class _PostsPageState extends State<PostsPage> with SingleTickerProviderStateMix
     final image = widget.posts?.elementAt(index).nodeData;
     final width = image?.dimensions?.width ?? 100.width;
     final height = image?.dimensions?.height ?? 70.height;
+    final isVideo = image?.isVideo ?? false;
+
+    if (isVideo) {
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          VideoPlayer(
+            aspectRatio: width / height,
+            videoUrl: image!.videoUrl!,
+            controller: videoPlayerController,
+          ),
+          Positioned(
+            bottom: 10,
+            right: 10,
+            child: DownloadButton(
+              fileLink: image.videoUrl!,
+              isVideo: image.isVideo,
+            ),
+          ),
+        ],
+      );
+    }
     if (image?.edgeSidecarToChildren == null) {
       return AspectRatio(
         // height: image?.dimensions?.height?.toDouble() ?? 60.height,

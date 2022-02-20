@@ -16,21 +16,27 @@ class ProfileImageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          margin: kMargin,
-          // padding: EdgeInsets.symmetric(horizontal: 20),
-          clipBehavior: Clip.antiAlias,
-          decoration: const BoxDecoration(shape: BoxShape.circle),
-          height: size.image,
-          width: size.image,
-          child: image,
-        ),
-        // SizedBox(height: 1.height),
-        if (name != null) name!,
-      ],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 1.width),
+      width: 19.image,
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(shape: BoxShape.circle),
+            height: size.image,
+            width: size.image,
+            child: image,
+          ),
+          if (name != null)
+            SizedBox(
+              height: 1.height,
+            ),
+          if (name != null) name!,
+        ],
+      ),
     );
   }
 }

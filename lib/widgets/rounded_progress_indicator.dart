@@ -9,6 +9,7 @@ class RoundedProgressIndicator extends StatefulWidget {
   final double percentage;
   final double radius;
   final Color color;
+  final Color? backgroundColor;
   final double strokeWidth;
   final Duration duration;
   final Curve curve;
@@ -19,6 +20,7 @@ class RoundedProgressIndicator extends StatefulWidget {
     required this.radius,
     required this.color,
     required this.strokeWidth,
+    this.backgroundColor,
     this.curve = Curves.easeInOutBack,
     this.duration = const Duration(milliseconds: 1000),
   }) : super(key: key);
@@ -33,7 +35,6 @@ class _RoundedProgressIndicatorState extends State<RoundedProgressIndicator> wit
   void createAnimation({double begin = 0.0}) {
     tween = Tween<double>(begin: begin, end: widget.percentage);
   }
-
 
   @override
   void didUpdateWidget(covariant RoundedProgressIndicator oldWidget) {
@@ -50,13 +51,14 @@ class _RoundedProgressIndicatorState extends State<RoundedProgressIndicator> wit
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
+      
       curve: widget.curve,
       duration: widget.duration,
       tween: tween,
       builder: (context, double value, child) {
         return CustomPaint(
           painter: MyPainter(
-            backgroundColor: Colors.grey.shade100,
+            backgroundColor: widget.backgroundColor ?? Colors.grey.shade300,
             strokeWidth: widget.strokeWidth,
             color: widget.color,
             radius: widget.radius,
